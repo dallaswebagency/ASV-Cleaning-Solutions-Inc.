@@ -96,20 +96,26 @@ nav a:hover::after{width:100%}
 .sec-head{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:end;margin-bottom:64px}
 .sec-head h2{font-size:clamp(46px,6.4vw,96px)}
 .sec-head p{color:var(--ink-2);font-size:18px;max-width:460px;justify-self:end}
-.svc-list{list-style:none;border-top:2px solid var(--ink);position:relative}
-.svc{display:grid;grid-template-columns:90px 1.3fr 1fr 60px;gap:30px;align-items:center;padding:34px 0;border-bottom:1px solid var(--line);position:relative;cursor:pointer}
-.svc .no{font-family:var(--disp);font-stretch:125%;font-weight:700;font-size:15px;color:var(--red)}
-.svc h3{font-family:var(--disp);font-stretch:110%;font-weight:800;text-transform:uppercase;font-size:clamp(26px,3vw,42px);line-height:1;letter-spacing:-.01em;transition:transform .35s}
-.svc p{color:var(--ink-2);font-size:16px}
-.svc .arr{width:52px;height:52px;border:2px solid var(--ink);display:grid;place-items:center;transform:skewX(-14deg);transition:.25s}
-.svc .arr svg{transform:skewX(14deg);width:20px}
-.svc:hover h3{transform:translateX(14px)}
-.svc:hover .arr{background:var(--red);border-color:var(--red);color:#fff}
-.svc .peek{position:absolute;right:120px;top:50%;width:260px;aspect-ratio:4/3;transform:translateY(-50%) rotate(-3deg) scale(.9);opacity:0;pointer-events:none;transition:.35s;z-index:5;box-shadow:0 30px 60px -20px rgba(0,0,0,.4);overflow:hidden}
-.svc .peek img{width:100%;height:100%;object-fit:cover}
-.svc:hover .peek{opacity:1;transform:translateY(-50%) rotate(-3deg) scale(1)}
-.svc.minor h3{font-size:clamp(22px,2.3vw,30px);color:var(--ink-2)}
-.svc-note{margin-top:26px;font-size:15px;color:var(--mute)}
+.panels{display:flex;gap:10px;height:600px}
+.pn{position:relative;flex:1;min-width:0;overflow:hidden;cursor:pointer;transition:flex .7s cubic-bezier(.7,0,.2,1);clip-path:polygon(28px 0,100% 0,calc(100% - 28px) 100%,0 100%);margin-left:-18px;color:#fff}
+.pn:first-child{margin-left:0;clip-path:polygon(0 0,100% 0,calc(100% - 28px) 100%,0 100%)}
+.pn:last-child{clip-path:polygon(28px 0,100% 0,100% 100%,0 100%)}
+.pn.on{flex:4.2}
+.pn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s,filter .6s;filter:grayscale(.55) brightness(.62)}
+.pn.on img{filter:none;transform:scale(1.02)}
+.pn::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(10,10,10,.88) 100%);opacity:0;transition:opacity .6s}
+.pn.on::after{opacity:1}
+.pn .vt{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);writing-mode:vertical-rl;rotate:180deg;font-family:var(--disp);font-stretch:115%;font-weight:800;text-transform:uppercase;font-size:22px;letter-spacing:.02em;white-space:nowrap;transition:opacity .3s;z-index:2}
+.pn .vt b{color:var(--red);margin-bottom:14px;font-size:15px;display:inline-block}
+.pn.on .vt{opacity:0}
+.pn .bd{position:absolute;left:56px;right:70px;bottom:44px;z-index:2;opacity:0;transform:translateY(24px);transition:.5s .25s}
+.pn.on .bd{opacity:1;transform:none}
+.pn .bd .no{font-family:var(--disp);font-stretch:125%;font-weight:800;font-size:14px;letter-spacing:.2em;display:inline-block;background:var(--red);padding:6px 14px;transform:skewX(-14deg);margin-bottom:16px}
+.pn .bd h3{font-family:var(--disp);font-stretch:112%;font-weight:800;text-transform:uppercase;font-size:clamp(30px,3.2vw,46px);line-height:.98;margin-bottom:12px;max-width:560px}
+.pn .bd p{font-size:17px;color:#e6e1d8;max-width:440px;margin-bottom:20px}
+.pn .bd a{font-weight:700;font-size:14px;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid var(--red);padding-bottom:3px}
+.svc-note{margin-top:22px;font-size:14px;color:var(--mute);display:flex;justify-content:space-between;gap:20px}
+.svc-note span{font-family:var(--disp);font-stretch:118%;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--ink)}
 
 /* pricing */
 .pricing{background:var(--ink);color:#fff;position:relative;overflow:hidden;padding:120px 0}
@@ -249,7 +255,8 @@ footer ul a:hover{color:#fff}
   .wall{columns:2}
   .ft-top{grid-template-columns:1fr 1fr}
   .pricing::after{display:none}
-  .svc .peek{display:none}
+  .panels{height:520px}
+  .pn .bd{left:44px;right:44px}
 }
 @media(max-width:700px){
   .wrap{padding:0 20px}
@@ -268,9 +275,13 @@ footer ul a:hover{color:#fff}
   .trust-row div{padding:14px 0}
   .areas .track span{font-size:20px;padding:14px 20px;gap:40px}
   .services,.reviews,.book{padding:90px 0}
-  .svc{grid-template-columns:44px 1fr 44px;gap:14px;padding:26px 0}
-  .svc p{grid-column:2/3;grid-row:2}
-  .svc .arr{width:40px;height:40px}
+  .panels{flex-direction:column;height:auto;gap:8px}
+  .pn,.pn:first-child,.pn:last-child{clip-path:none;margin:0;flex:none;height:86px;transition:height .6s cubic-bezier(.7,0,.2,1)}
+  .pn.on{height:420px}
+  .pn .vt{writing-mode:horizontal-tb;rotate:0deg;left:22px;bottom:auto;top:50%;transform:translateY(-50%);font-size:18px}
+  .pn .vt b{margin:0 12px 0 0}
+  .pn .bd{left:22px;right:22px;bottom:26px}
+  .svc-note{flex-direction:column}
   .pricing{padding:90px 0}
   .ledger{padding:6px 22px 26px}
   .ledger dl{grid-template-columns:1fr}
@@ -369,38 +380,34 @@ footer ul a:hover{color:#fff}
       <div><span class="kicker">What we do</span><h2 class="disp" style="margin-top:18px">Every room.<br><span style="color:var(--red)">Every reason.</span></h2></div>
       <p>From regular upkeep to the dust after a renovation, we clean residential and commercial spaces with eco-friendly products and real attention to detail.</p>
     </div>
-    <ul class="svc-list">
-      <li class="svc rvl" onclick="location.href='#book'">
-        <span class="no">01</span><h3>Residential Cleaning</h3>
-        <p>A regular service that keeps your home fresh and tidy.</p>
-        <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <div class="peek"><img src="images/living-room.jpg" alt="Clean bright living room"></div>
-      </li>
-      <li class="svc rvl" onclick="location.href='#book'">
-        <span class="no">02</span><h3>Move-Out / Move-In Cleaning</h3>
-        <p>A thorough clean for a smooth, stress-free move, leaving the home ready for the next occupants.</p>
-        <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <div class="peek"><img src="images/move-out.jpg" onerror="this.onerror=null;this.src='images/team-counter.jpg'" alt="Empty clean home ready for move-in"></div>
-      </li>
-      <li class="svc rvl" onclick="location.href='#book'">
-        <span class="no">03</span><h3>Post-Construction / Post-Renovation</h3>
-        <p>We clear the dust and mess left behind after renovation or construction work.</p>
-        <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <div class="peek"><img src="images/post-construction.jpg" onerror="this.onerror=null;this.src='images/team-steam.jpg'" alt="Freshly renovated room after cleaning"></div>
-      </li>
-      <li class="svc minor rvl" onclick="location.href='#book'">
-        <span class="no">04</span><h3>Carpet &amp; Upholstery Cleaning</h3>
-        <p>Available to book alongside your cleaning.</p>
-        <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <div class="peek"><img src="images/carpet-upholstery.jpg" onerror="this.onerror=null;this.src='images/living-room.jpg'" alt="Carpet and sofa after cleaning"></div>
-      </li>
-      <li class="svc minor rvl" onclick="location.href='#book'">
-        <span class="no">05</span><h3>Commercial Cleaning</h3>
-        <p>Cleaning for commercial spaces. Ask us for a quote.</p>
-        <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <div class="peek"><img src="images/commercial.jpg" onerror="this.onerror=null;this.src='images/team-wipe.jpg'" alt="Clean commercial office space"></div>
-      </li>
-    </ul>
+    <div class="panels rvl" id="panels">
+      <div class="pn on" tabindex="0">
+        <img src="images/living-room.jpg" alt="Bright clean living room">
+        <div class="vt"><b>01</b>Residential</div>
+        <div class="bd"><span class="no">01 / 05</span><h3>Residential Cleaning</h3><p>A regular service that keeps your home fresh and tidy.</p><a href="#book">Book this service</a></div>
+      </div>
+      <div class="pn" tabindex="0">
+        <img src="images/move-out.jpg" alt="Empty clean apartment ready for move-in">
+        <div class="vt"><b>02</b>Move-out / in</div>
+        <div class="bd"><span class="no">02 / 05</span><h3>Move-Out / Move-In Cleaning</h3><p>A thorough clean for a smooth, stress-free move, leaving the home ready for the next occupants.</p><a href="#book">Book this service</a></div>
+      </div>
+      <div class="pn" tabindex="0">
+        <img src="images/post-construction.jpg" alt="Newly renovated kitchen after cleaning">
+        <div class="vt"><b>03</b>Post-construction</div>
+        <div class="bd"><span class="no">03 / 05</span><h3>Post-Construction / Post-Renovation</h3><p>We clear the dust and mess left behind after renovation or construction work.</p><a href="#book">Book this service</a></div>
+      </div>
+      <div class="pn" tabindex="0">
+        <img src="images/carpet-upholstery.jpg" alt="Freshly cleaned sofa and carpet">
+        <div class="vt"><b>04</b>Carpet &amp; upholstery</div>
+        <div class="bd"><span class="no">04 / 05</span><h3>Carpet &amp; Upholstery Cleaning</h3><p>Available to book alongside your cleaning.</p><a href="#book">Book this service</a></div>
+      </div>
+      <div class="pn" tabindex="0">
+        <img src="images/commercial.jpg" alt="Clean modern office after commercial cleaning">
+        <div class="vt"><b>05</b>Commercial</div>
+        <div class="bd"><span class="no">05 / 05</span><h3>Commercial Cleaning</h3><p>Cleaning for commercial spaces. Ask us for a quote.</p><a href="#book">Book this service</a></div>
+      </div>
+    </div>
+    <div class="svc-note"><span>Hover or tap a panel</span>Eco-friendly products on every job · Calgary and surrounding areas</div>
   </div>
 </section>
 
@@ -588,6 +595,10 @@ footer ul a:hover{color:#fff}
 </footer>
 
 <script>
+// service panels
+const pns=document.querySelectorAll('.pn');
+pns.forEach(p=>{const on=()=>{pns.forEach(o=>o.classList.remove('on'));p.classList.add('on')};
+  p.addEventListener('mouseenter',()=>{if(matchMedia('(hover:hover)').matches)on()});p.addEventListener('click',on);p.addEventListener('focus',on)});
 // reveal on scroll
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rvl').forEach(el=>io.observe(el));
