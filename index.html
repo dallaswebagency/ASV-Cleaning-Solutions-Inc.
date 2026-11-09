@@ -231,7 +231,7 @@ footer ul a:hover{color:#fff}
 .socials a{width:40px;height:40px;display:grid;place-items:center;background:#1c1c1c;transform:skewX(-14deg);transition:.2s}
 .socials a svg{transform:skewX(14deg);width:17px;height:17px;fill:#fff}
 .socials a:hover{background:var(--red)}
-.ft-word{font-family:var(--disp);font-stretch:125%;font-weight:900;text-transform:uppercase;font-size:clamp(50px,12.4vw,190px);line-height:.8;color:#161616;white-space:nowrap;letter-spacing:-.02em;margin-bottom:-.12em;user-select:none}
+.ft-word{font-family:var(--disp);font-stretch:125%;font-weight:900;text-transform:uppercase;font-size:100px;line-height:1;color:#1c1c1c;white-space:nowrap;letter-spacing:-.02em;padding-bottom:28px;user-select:none;text-align:center}
 .ft-bot{border-top:1px solid #222;padding:24px 0;display:flex;justify-content:space-between;font-size:14px;flex-wrap:wrap;gap:12px;position:relative;z-index:2;background:#0b0b0b}
 .ft-bot a{color:#fff;font-weight:600}
 .ft-bot a:hover{color:var(--red)}
@@ -584,7 +584,7 @@ footer ul a:hover{color:#fff}
         </ul>
       </div>
     </div>
-    <div class="ft-word" aria-hidden="true">ASV Cleaning</div>
+    <div class="ft-word" aria-hidden="true"><span>ASV Cleaning</span></div>
   </div>
   <div class="ft-bot">
     <div class="wrap" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:12px">
@@ -595,6 +595,10 @@ footer ul a:hover{color:#fff}
 </footer>
 
 <script>
+// footer word: scale to fit full width
+function fitWord(){const el=document.querySelector('.ft-word');if(!el)return;el.style.fontSize='100px';
+  const cs=getComputedStyle(el.parentElement),box=el.parentElement.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),w=el.firstElementChild.offsetWidth;el.style.fontSize=Math.floor(100*box/w*0.99)+'px'}
+document.fonts.ready.then(fitWord);addEventListener('resize',fitWord);
 // service panels
 const pns=document.querySelectorAll('.pn');
 pns.forEach(p=>{const on=()=>{pns.forEach(o=>o.classList.remove('on'));p.classList.add('on')};
